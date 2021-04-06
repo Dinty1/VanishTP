@@ -51,9 +51,7 @@ public class VanishTP extends JavaPlugin {
 
             } catch (FileNotFoundException e) {
                 getLogger().info("File not found, creating it...");
-                File file = new File(dataFolderPath + "\\vanished-player-locations.json");
                 try {
-                    file.createNewFile();
                     FileWriter fileWriter = new FileWriter(dataFolderPath + "\\vanished-player-locations.json");
                     fileWriter.write("{}");
                     fileWriter.close();
@@ -93,19 +91,19 @@ public class VanishTP extends JavaPlugin {
         }
     }
 
-    public void addVanished(String player, Location location) {
-        vanishedPlayerLocations.put(player, location);
+    public void addVanished(String playerUUID, Location location) {
+        vanishedPlayerLocations.put(playerUUID, location);
     }
 
     public void removeVanished(Player player) {
-        vanishedPlayerLocations.remove(player.getName());
+        vanishedPlayerLocations.remove(player.getUniqueId().toString());
     }
 
     public Location getVanishedPlayerLocation(Player player) {
-        return vanishedPlayerLocations.get(player.getName());
+        return vanishedPlayerLocations.get(player.getUniqueId().toString());
     }
 
     public boolean isVanished(Player player) {
-        return vanishedPlayerLocations.get(player.getName()) != null;
+        return vanishedPlayerLocations.get(player.getUniqueId().toString()) != null;
     }
 }

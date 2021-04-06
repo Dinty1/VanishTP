@@ -22,8 +22,9 @@ public class PlayerVanishStatusChangeListener implements Listener {
     public void onVanishStatusChange(PlayerVanishStateChangeEvent event) {
         final Player player = plugin.getServer().getPlayer(event.getName());
         if (event.isVanishing()) {
+            assert player != null;
             if (plugin.isVanished(player)) return;// they were vanished when they left, so keep the previous location
-            plugin.addVanished(player.getName(), player.getLocation());
+            plugin.addVanished(player.getUniqueId().toString(), player.getLocation());
         } else {
             if (!player.hasPermission("vanishtp.preventteleport")) {
                 player.teleport(plugin.getVanishedPlayerLocation(player));

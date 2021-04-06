@@ -29,7 +29,7 @@ public class PlayerJoinListener implements Listener {
 
             plugin.removeVanished(player);
         } else if (!plugin.isVanished(player) && VanishAPI.isInvisible(player)) {//if player is now invisible but wasn't vanished when they last quit
-            plugin.addVanished(player.getName(), player.getLocation());
+            plugin.addVanished(player.getUniqueId().toString(), player.getLocation());
         }
         //no need to do anything else
     }
