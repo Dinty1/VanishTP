@@ -1,28 +1,25 @@
-/*
-Listens to the SuperVanish vanish status change event
- */
 package io.github.dinty1.vanishtp.listeners;
 
-import de.myzelyam.api.vanish.PlayerVanishStateChangeEvent;
+import de.myzelyam.api.vanish.VanishAPI;
 import io.github.dinty1.vanishtp.VanishTP;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerVanishStatusChangeEventListener implements Listener {
-    public VanishTP plugin;
+public class PlayerJoinListener implements Listener {
+    private VanishTP plugin;
 
-    public PlayerVanishStatusChangeEventListener(VanishTP p) {
+    public PlayerJoinListener(VanishTP p) {
         this.plugin = p;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onVanishStatusChange(PlayerVanishStateChangeEvent event) {
-        Player player = plugin.getServer().getPlayer(event.getName());
-        if (event.isVanishing()) {
-            plugin.addVanished(player);
-        } else {
+    @SuppressWarnings("unused")
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        final Player player = event.getPlayer();
+        if (plugin.isVanished(event.getPlayer()) && !VanishAPI.isInvisible(player)) {//if player was vanished when they quit and now is not vanished
             if (!player.hasPermission("vanishtp.preventteleport")) {
                 player.teleport(plugin.getVanishedPlayerLocation(player));
                 plugin.getLogger().info("Teleported " + player.getName() + " to their previous location");
@@ -31,7 +28,9 @@ public class PlayerVanishStatusChangeEventListener implements Listener {
             }
 
             plugin.removeVanished(player);
-
+        } else if (!plugin.isVanished(player) && VanishAPI.isInvisible(player)) {//if player is now invisible but wasn't vanished when they last quit
+            plugin.addVanished(player.getName(), player.getLocation());
         }
+        //no need to do anything else
     }
 }

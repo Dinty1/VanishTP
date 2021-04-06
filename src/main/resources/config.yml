@@ -1,0 +1,5 @@
+# Please don't touch
+config-version: 1
+
+# Whether to store vanished players in a json file so that they can be returned after a restart
+store-vanished-players-in-file: true
