@@ -2,7 +2,7 @@ name: VanishTP
 description: Returns players to the location at which they vanished once they unvanish.
 author: DintyB
 main: io.github.dinty1.vanishtp.VanishTP
-version: 1.0.0
+version: 1.0.1
 api-version: 1.13
 depend: [SuperVanish]
 permissions:

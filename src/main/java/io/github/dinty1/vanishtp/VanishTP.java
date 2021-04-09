@@ -2,6 +2,7 @@ package io.github.dinty1.vanishtp;
 
 import io.github.dinty1.vanishtp.listeners.PlayerJoinListener;
 import io.github.dinty1.vanishtp.listeners.PlayerVanishStatusChangeListener;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +22,10 @@ public class VanishTP extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        //configure bstats
+        final int pluginId = 10993;
+        Metrics metrics = new Metrics(this, pluginId);
+
         //register listeners
         getServer().getPluginManager().registerEvents(new PlayerVanishStatusChangeListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
