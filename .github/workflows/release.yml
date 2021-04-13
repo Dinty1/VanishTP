@@ -36,26 +36,17 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
-      - name: Create Release
-        id: draft_release
-        uses: actions/create-release@v1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{github.event.pull_request.title}}
-          release_name: Release Version ${{github.event.pull_request.title}}
-          draft: false
-          prerelease: false
-      - name: Upload release assets
+      - name: Publish Release
         id: upload_assets
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: target/VanishTP-${{github.event.pull_request.title}}.jar
           asset_name: VanishTP-${{github.event.pull_request.title}}.jar
-          tag: ${{ github.event.pull_request.title }}
+          tag: v${{ github.event.pull_request.title }}
           overwrite: true
           body: ${{github.event.pull_request.body}}
+          release_name: Release Version ${{github.event.pull_request.title}}
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.RELEASE_WEBHOOK }}
