@@ -3,6 +3,7 @@ package io.github.dinty1.vanishtp;
 import io.github.dinty1.vanishtp.listeners.PlayerJoinListener;
 import io.github.dinty1.vanishtp.listeners.PlayerVanishStatusChangeListener;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,6 +33,9 @@ public class VanishTP extends JavaPlugin {
 
         //save config
         saveDefaultConfig();
+
+        //migrate config
+        new ConfigMigrator().migrate(getConfig(), this);
 
         //config migration stuff goes here if/when needed
 
@@ -102,6 +106,9 @@ public class VanishTP extends JavaPlugin {
 
     public void removeVanished(Player player) {
         vanishedPlayerLocations.remove(player.getUniqueId().toString());
+        if (getConfig().getBoolean("inform-players-of-return")) {
+            player.sendMessage(ChatColor.GREEN + "You have been returned to your previous location.");
+        }
     }
 
     public Location getVanishedPlayerLocation(Player player) {
