@@ -6,7 +6,7 @@
 
     <groupId>io.github.dinty1</groupId>
     <artifactId>VanishTP</artifactId>
-    <version>1.1.00</version>
+    <version>1.1.0</version>
 
     <build>
         <plugins>
