@@ -46,7 +46,7 @@ jobs:
           tag: v${{ github.event.pull_request.title }}
           overwrite: true
           body: ${{github.event.pull_request.body}}
-          release_name: Release Version ${{github.event.pull_request.title}}
+          release_name: Release ${{github.event.pull_request.title}}
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.RELEASE_WEBHOOK }}
