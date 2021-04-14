@@ -123,7 +123,7 @@ public class VanishTP extends JavaPlugin {
 
     public void removeVanished(Player player) {
         vanishedPlayerLocations.remove(player.getUniqueId().toString());
-        if (getConfig().getBoolean("inform-players-of-return")) {
+        if (getConfig().getBoolean("inform-players-of-return") && !player.hasPermission("vanishtp.preventteleport")) {
             player.sendMessage(ChatColor.GREEN + "You have been returned to your previous location.");
         }
     }
