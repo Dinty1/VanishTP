@@ -31,14 +31,8 @@ public class ConfigMigrator {
             }
             oldConfigReader.close();
 
-            vanishTP.getLogger().info(oldConfigFile.canWrite() ? "true" : "false");
             //load new config
-            try {
-                Files.delete(oldConfigFile.toPath());
-            } catch (IOException e) {
-                vanishTP.getLogger().info(oldConfigFile.toPath().toString());
-            }
-
+            oldConfigFile.delete();
             vanishTP.saveDefaultConfig();
 
             File newConfigFile = new File(vanishTP.getDataFolder(), "config.yml");
