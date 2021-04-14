@@ -35,14 +35,19 @@ public class VanishTP extends JavaPlugin {
         saveDefaultConfig();
 
         //migrate config
-        new ConfigMigrator().migrate(getConfig(), this);
+        try {
+            new ConfigMigrator().migrate(getConfig(), this);
+        } catch (Exception e) {
+            getLogger().severe("An error occurred while trying to migrate the config");
+            e.printStackTrace();
+        }
 
         //config migration stuff goes here if/when needed
 
         if (getConfig().getBoolean("store-vanished-players-in-file")) {
             getLogger().info("Attempting to read data from vanished-player-locations.json");
             try {
-                File file = new File(dataFolderPath + "\\vanished-player-locations.json");
+                File file = new File(dataFolderPath, "vanished-player-locations.json");
                 String data = "";
                 Scanner reader = new Scanner(file);
                 while (reader.hasNextLine()) {
