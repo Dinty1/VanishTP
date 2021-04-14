@@ -5,11 +5,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.*;
 
 public class ConfigMigrator {
-    private Integer latestConfigVersion = 2;
+    private Integer latestConfigVersion = 3;
 
     public void migrate(FileConfiguration oldConfig, VanishTP vanishTP) throws IOException {
         if (oldConfig.getInt("config-version") < latestConfigVersion) {
