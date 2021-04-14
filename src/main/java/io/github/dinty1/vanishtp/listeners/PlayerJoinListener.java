@@ -2,6 +2,7 @@ package io.github.dinty1.vanishtp.listeners;
 
 import de.myzelyam.api.vanish.VanishAPI;
 import io.github.dinty1.vanishtp.VanishTP;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,6 +32,10 @@ public class PlayerJoinListener implements Listener {
         } else if (!plugin.isVanished(player) && VanishAPI.isInvisible(player)) {//if player is now invisible but wasn't vanished when they last quit
             plugin.addVanished(player.getUniqueId().toString(), player.getLocation());
         }
-        //no need to do anything else
+
+
+        if (player.hasPermission("vanishtp.adminalerts") && plugin.updateAvailable()) {
+            player.sendMessage(ChatColor.GREEN + "An update for VanishTP is available! Get it here: https://github.com/Dinty1/VanishTP/releases");
+        }
     }
 }

@@ -20,6 +20,7 @@ import java.util.Scanner;
 public class VanishTP extends JavaPlugin {
     private HashMap<String, Location> vanishedPlayerLocations = new HashMap<String, Location>();
     private final String dataFolderPath = getDataFolder().getAbsolutePath();
+    private boolean updateAvailable = false;
 
     @Override
     public void onEnable() {
@@ -69,12 +70,23 @@ public class VanishTP extends JavaPlugin {
                     FileWriter fileWriter = new FileWriter(dataFolderPath + "\\vanished-player-locations.json");
                     fileWriter.write("{}");
                     fileWriter.close();
-                } catch (IOException f) {
+                } catch (Exception f) {
                     getLogger().severe("An error occurred while trying to write to the file, please restart your server.");
                 }
 
             }
         }
+
+        getLogger().info("Checking for updates...");
+        new UpdateChecker(this, 91157).getLatestVersion(version -> {
+            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+                getLogger().info("Up to date!");
+            } else {
+                getLogger().info("An update is available! Get it here: https://github.com/Dinty1/VanishTP/releases");
+                this.updateAvailable = true;
+            }
+        });
+
         getLogger().info("Enabled!");
     }
 
@@ -96,7 +108,7 @@ public class VanishTP extends JavaPlugin {
                 fileWriter.write(JSONData.toString());
                 fileWriter.close();
                 getLogger().info("Successfully saved vanished player location data.");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 getLogger().severe("An error occurred while trying to save location data.");
                 e.printStackTrace();
             }
@@ -122,5 +134,9 @@ public class VanishTP extends JavaPlugin {
 
     public boolean isVanished(Player player) {
         return vanishedPlayerLocations.get(player.getUniqueId().toString()) != null;
+    }
+
+    public boolean updateAvailable() {
+        return this.updateAvailable;
     }
 }
