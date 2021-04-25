@@ -36,11 +36,11 @@
                     <relocations>
                         <relocation>
                             <pattern>org.json</pattern>
-                            <shadedPattern>io.github.dinty1.vanishtp.dependancies.json</shadedPattern>
+                            <shadedPattern>io.github.dinty1.vanishtp.dependencies.json</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>io.github.dinty1.vanishtp.dependancies.bstats</shadedPattern>
+                            <shadedPattern>io.github.dinty1.vanishtp.dependencies.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
