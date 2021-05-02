@@ -4,6 +4,9 @@
 # Please don't touch
 config-version: ${project.version}
 
+# Whether admins should be informed of new versions being available when they log in
+inform-admins-of-updates: true
+
 # Whether to store vanished players in a json file so that they can be returned after a restart
 store-vanished-players-in-file: true
 
