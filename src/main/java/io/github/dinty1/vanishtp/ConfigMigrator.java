@@ -8,11 +8,10 @@ import java.io.IOException;
 import java.util.*;
 
 public class ConfigMigrator {
-    private Integer latestConfigVersion = 3;
 
     public void migrate(FileConfiguration oldConfig, VanishTP vanishTP) throws IOException {
-        if (oldConfig.getInt("config-version") < latestConfigVersion) {
-            vanishTP.getLogger().info("Your config is outdated, migrating...");
+        if (!oldConfig.getString("config-version").equals(vanishTP.getDescription().getVersion())) {
+            vanishTP.getLogger().info("Your config version does not match the plugin version, migrating...");
 
             //load config
             File oldConfigFile = new File(vanishTP.getDataFolder(), "config.yml");

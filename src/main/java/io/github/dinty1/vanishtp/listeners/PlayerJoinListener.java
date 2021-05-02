@@ -34,7 +34,7 @@ public class PlayerJoinListener implements Listener {
         }
 
 
-        if (player.hasPermission("vanishtp.adminalerts") && plugin.updateAvailable()) {
+        if (player.hasPermission("vanishtp.adminalerts") && plugin.updateAvailable() && plugin.getConfig().getBoolean("inform-admins-of-updates")) {
             player.sendMessage(ChatColor.GREEN + "An update for VanishTP is available! Get it here: https://github.com/Dinty1/VanishTP/releases");
         }
     }

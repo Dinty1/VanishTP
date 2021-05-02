@@ -2,10 +2,16 @@
 # If something isn't working, please join our Discord at https://discord.gg/BCVHCzd77R or open an issue on GitHub
 
 # Please don't touch
-config-version: 3
+config-version: ${project.version}
+
+# Whether admins should be informed of new versions being available when they log in
+inform-admins-of-updates: true
 
 # Whether to store vanished players in a json file so that they can be returned after a restart
 store-vanished-players-in-file: true
 
 # Whether to inform players that they have been returned to their previous location
 inform-players-of-return: true
+
+# The message sent to players who have been returned to their previous location (if inform-players-of-return is set to true)
+return-message: "&3You have been returned to your previous location."
