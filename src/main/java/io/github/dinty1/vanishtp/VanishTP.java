@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class VanishTP extends JavaPlugin {
@@ -124,7 +125,7 @@ public class VanishTP extends JavaPlugin {
     public void removeVanished(Player player) {
         vanishedPlayerLocations.remove(player.getUniqueId().toString());
         if (getConfig().getBoolean("inform-players-of-return") && !player.hasPermission("vanishtp.preventteleport")) {
-            player.sendMessage(ChatColor.GREEN + "You have been returned to your previous location.");
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(getConfig().getString("return-message"))));
         }
     }
 
