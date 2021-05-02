@@ -2,7 +2,7 @@
 # If something isn't working, please join our Discord at https://discord.gg/BCVHCzd77R or open an issue on GitHub
 
 # Please don't touch
-config-version: 3
+config-version: {project.version}
 
 # Whether to store vanished players in a json file so that they can be returned after a restart
 store-vanished-players-in-file: true
