@@ -8,7 +8,7 @@ on:
       - develop
   
 jobs:
-  build-snapshot:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
