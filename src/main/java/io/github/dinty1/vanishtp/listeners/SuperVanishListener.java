@@ -11,10 +11,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-public class PlayerVanishStatusChangeListener implements Listener {
+public class SuperVanishListener implements Listener {
     private VanishTP plugin;
 
-    public PlayerVanishStatusChangeListener(VanishTP p) {
+    public SuperVanishListener(VanishTP p) {
         this.plugin = p;
     }
 

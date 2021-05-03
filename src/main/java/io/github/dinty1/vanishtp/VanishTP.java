@@ -1,7 +1,7 @@
 package io.github.dinty1.vanishtp;
 
 import io.github.dinty1.vanishtp.listeners.PlayerJoinListener;
-import io.github.dinty1.vanishtp.listeners.PlayerVanishStatusChangeListener;
+import io.github.dinty1.vanishtp.listeners.SuperVanishListener;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
@@ -29,10 +28,18 @@ public class VanishTP extends JavaPlugin {
         final int pluginId = 10993;
         Metrics metrics = new Metrics(this, pluginId);
 
-        //register listeners
-        getServer().getPluginManager().registerEvents(new PlayerVanishStatusChangeListener(this), this);
+        //register listeners and do hook stuff
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+        if (getServer().getPluginManager().isPluginEnabled("VanishNoPacket")) {
 
+            getLogger().info("Listening to VanishNoPacket.");
+        } else if (getServer().getPluginManager().isPluginEnabled("SuperVanish")) {
+            getServer().getPluginManager().registerEvents(new SuperVanishListener(this), this);
+            getLogger().info("Listening to SuperVanish.");
+        } else {
+            getLogger().severe("No vanish plugins were detected, disabling...");
+            setEnabled(false);
+        }
         //save config
         saveDefaultConfig();
 
@@ -43,8 +50,6 @@ public class VanishTP extends JavaPlugin {
             getLogger().severe("An error occurred while trying to migrate the config");
             e.printStackTrace();
         }
-
-        //config migration stuff goes here if/when needed
 
         if (getConfig().getBoolean("store-vanished-players-in-file")) {
             getLogger().info("Attempting to read data from vanished-player-locations.json");
