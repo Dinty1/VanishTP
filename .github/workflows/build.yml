@@ -1,11 +1,12 @@
 on:
   push:
     branches:
-    - develop
-    - feature/*
+      - develop
+      - feature/*
+      - main
   pull_request:
     branches:
-    - develop
+      - develop
   
 jobs:
   build-snapshot:
