@@ -1,8 +1,10 @@
 package io.github.dinty1.vanishtp;
 
+import de.myzelyam.api.vanish.VanishAPI;
 import org.bukkit.entity.Player;
+import org.kitteh.vanish.VanishPlugin;
 
-public class VanishManager {
+public class VanishStatusManager {
     public static void onVanishStatusChange(Player player, boolean vanishing, VanishTP plugin) {
         if (vanishing) {
             if (player == null) return;//prevent NPE occurring when player joins in vanish
@@ -18,6 +20,18 @@ public class VanishManager {
 
             plugin.removeVanished(player);
 
+        }
+    }
+
+    public static boolean isVanished(Player player, VanishTP plugin) {
+        String hookedPlugin = plugin.getHookedVanishPlugin();
+        switch (hookedPlugin) {
+            case "VanishNoPacket":
+                return VanishPlugin.getPlugin(VanishPlugin.class).getManager().isVanished(player);
+            case "SuperVanish":
+                return VanishAPI.isInvisible(player);
+            default:
+                return false;
         }
     }
 }
