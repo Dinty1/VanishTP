@@ -4,7 +4,7 @@ author: DintyB
 main: io.github.dinty1.vanishtp.VanishTP
 version: ${project.version}
 api-version: 1.16
-softdepend:  [SuperVanish, VanishNoPacket]
+softdepend:  [SuperVanish, VanishNoPacket, Essentials]
 permissions:
   vanishtp.preventteleport:
     description: Prevents the player from being teleported after unvanishing.

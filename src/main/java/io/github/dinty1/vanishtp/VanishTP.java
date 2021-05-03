@@ -1,5 +1,6 @@
 package io.github.dinty1.vanishtp;
 
+import io.github.dinty1.vanishtp.listeners.EssentialsVanishListener;
 import io.github.dinty1.vanishtp.listeners.PlayerJoinListener;
 import io.github.dinty1.vanishtp.listeners.SuperVanishListener;
 import io.github.dinty1.vanishtp.listeners.VanishNoPacketListener;
@@ -40,6 +41,10 @@ public class VanishTP extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new SuperVanishListener(this), this);
             getLogger().info("Listening to SuperVanish.");
             hookedVanishPlugin = "SuperVanish";
+        } else if (getServer().getPluginManager().isPluginEnabled("Essentials")) { // Do this last
+            getServer().getPluginManager().registerEvents(new EssentialsVanishListener(this), this);
+            getLogger().info("Listening to Essentials Vanish.");
+            hookedVanishPlugin = "Essentials";
         } else {
             getLogger().severe("No vanish plugins were detected, disabling...");
             setEnabled(false);

@@ -1,5 +1,6 @@
 package io.github.dinty1.vanishtp;
 
+import com.earth2me.essentials.Essentials;
 import de.myzelyam.api.vanish.VanishAPI;
 import org.bukkit.entity.Player;
 import org.kitteh.vanish.VanishPlugin;
@@ -30,6 +31,8 @@ public class VanishStatusManager {
                 return VanishPlugin.getPlugin(VanishPlugin.class).getManager().isVanished(player);
             case "SuperVanish":
                 return VanishAPI.isInvisible(player);
+            case "Essentials":
+                return Essentials.getPlugin(Essentials.class).getUser(player).isVanished();
             default:
                 return false;
         }
