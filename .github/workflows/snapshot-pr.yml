@@ -4,7 +4,7 @@ on:
     - develop
  pull_request:
     branches:
-    - develop
+     - develop
   
 jobs:
   build-snapshot:
