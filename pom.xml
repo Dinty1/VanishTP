@@ -115,7 +115,11 @@
             <version>2.2.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.mbax</groupId>
+            <artifactId>VanishNoPacket</artifactId>
+            <version>0cb428ff27</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
-
-
 </project>

@@ -2,6 +2,7 @@ package io.github.dinty1.vanishtp;
 
 import io.github.dinty1.vanishtp.listeners.PlayerJoinListener;
 import io.github.dinty1.vanishtp.listeners.SuperVanishListener;
+import io.github.dinty1.vanishtp.listeners.VanishNoPacketListener;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -21,6 +22,7 @@ public class VanishTP extends JavaPlugin {
     private HashMap<String, Location> vanishedPlayerLocations = new HashMap<String, Location>();
     private final String dataFolderPath = getDataFolder().getAbsolutePath();
     private boolean updateAvailable = false;
+    private String hookedVanishPlugin;
 
     @Override
     public void onEnable() {
@@ -31,11 +33,13 @@ public class VanishTP extends JavaPlugin {
         //register listeners and do hook stuff
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         if (getServer().getPluginManager().isPluginEnabled("VanishNoPacket")) {
-
+            getServer().getPluginManager().registerEvents(new VanishNoPacketListener(this), this);
             getLogger().info("Listening to VanishNoPacket.");
+            hookedVanishPlugin = "VanishNoPacket";
         } else if (getServer().getPluginManager().isPluginEnabled("SuperVanish")) {
             getServer().getPluginManager().registerEvents(new SuperVanishListener(this), this);
             getLogger().info("Listening to SuperVanish.");
+            hookedVanishPlugin = "SuperVanish";
         } else {
             getLogger().severe("No vanish plugins were detected, disabling...");
             setEnabled(false);
@@ -144,5 +148,9 @@ public class VanishTP extends JavaPlugin {
 
     public boolean updateAvailable() {
         return this.updateAvailable;
+    }
+
+    public String getHookedVanishPlugin() {
+        return this.hookedVanishPlugin;
     }
 }
