@@ -43,6 +43,7 @@ public class VanishTP extends JavaPlugin {
         } else {
             getLogger().severe("No vanish plugins were detected, disabling...");
             setEnabled(false);
+            return; // Don't continue with enabling
         }
         //save config
         saveDefaultConfig();
