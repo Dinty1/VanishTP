@@ -13,6 +13,7 @@ public class EssentialsVanishListener implements Listener {
         this.plugin = p;
     }
 
+    // TODO make this work for people joining in vanish after quitting vanished
     @EventHandler
     public void onVanishStatusChange(VanishStatusChangeEvent event) {
         VanishStatusManager.onVanishStatusChange(event.getAffected().getBase(), event.getValue(), this.plugin);
