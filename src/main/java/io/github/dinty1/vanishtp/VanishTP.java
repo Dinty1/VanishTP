@@ -1,8 +1,10 @@
 package io.github.dinty1.vanishtp;
 
 import io.github.dinty1.vanishtp.listeners.PlayerJoinListener;
-import io.github.dinty1.vanishtp.listeners.PlayerVanishStatusChangeListener;
+import io.github.dinty1.vanishtp.listeners.SuperVanishListener;
+import io.github.dinty1.vanishtp.listeners.VanishNoPacketListener;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -12,7 +14,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
@@ -22,17 +23,30 @@ public class VanishTP extends JavaPlugin {
     private HashMap<String, Location> vanishedPlayerLocations = new HashMap<String, Location>();
     private final String dataFolderPath = getDataFolder().getAbsolutePath();
     private boolean updateAvailable = false;
+    private String hookedVanishPlugin = "none";
 
     @Override
     public void onEnable() {
-        //configure bstats
+        //configure metrics
         final int pluginId = 10993;
         Metrics metrics = new Metrics(this, pluginId);
+        metrics.addCustomChart(new SimplePie("vanish_plugin", () -> this.hookedVanishPlugin));
 
-        //register listeners
-        getServer().getPluginManager().registerEvents(new PlayerVanishStatusChangeListener(this), this);
+        //register listeners and do hook stuff
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
-
+        if (getServer().getPluginManager().isPluginEnabled("VanishNoPacket")) {
+            getServer().getPluginManager().registerEvents(new VanishNoPacketListener(this), this);
+            getLogger().info("Listening to VanishNoPacket.");
+            hookedVanishPlugin = "VanishNoPacket";
+        } else if (getServer().getPluginManager().isPluginEnabled("SuperVanish")) {
+            getServer().getPluginManager().registerEvents(new SuperVanishListener(this), this);
+            getLogger().info("Listening to SuperVanish.");
+            hookedVanishPlugin = "SuperVanish";
+        } else {
+            getLogger().severe("No vanish plugins were detected, disabling...");
+            setEnabled(false);
+            return; // Don't continue with enabling
+        }
         //save config
         saveDefaultConfig();
 
@@ -43,8 +57,6 @@ public class VanishTP extends JavaPlugin {
             getLogger().severe("An error occurred while trying to migrate the config");
             e.printStackTrace();
         }
-
-        //config migration stuff goes here if/when needed
 
         if (getConfig().getBoolean("store-vanished-players-in-file")) {
             getLogger().info("Attempting to read data from vanished-player-locations.json");
@@ -139,5 +151,9 @@ public class VanishTP extends JavaPlugin {
 
     public boolean updateAvailable() {
         return this.updateAvailable;
+    }
+
+    public String getHookedVanishPlugin() {
+        return this.hookedVanishPlugin;
     }
 }
