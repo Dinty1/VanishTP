@@ -4,6 +4,7 @@ import io.github.dinty1.vanishtp.listeners.PlayerJoinListener;
 import io.github.dinty1.vanishtp.listeners.SuperVanishListener;
 import io.github.dinty1.vanishtp.listeners.VanishNoPacketListener;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -22,13 +23,14 @@ public class VanishTP extends JavaPlugin {
     private HashMap<String, Location> vanishedPlayerLocations = new HashMap<String, Location>();
     private final String dataFolderPath = getDataFolder().getAbsolutePath();
     private boolean updateAvailable = false;
-    private String hookedVanishPlugin;
+    private String hookedVanishPlugin = "none";
 
     @Override
     public void onEnable() {
-        //configure bstats
+        //configure metrics
         final int pluginId = 10993;
         Metrics metrics = new Metrics(this, pluginId);
+        metrics.addCustomChart(new SimplePie("vanish_plugin", () -> this.hookedVanishPlugin));
 
         //register listeners and do hook stuff
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
