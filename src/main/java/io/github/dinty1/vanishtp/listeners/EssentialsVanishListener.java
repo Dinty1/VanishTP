@@ -12,7 +12,7 @@ public class EssentialsVanishListener implements Listener {
     public EssentialsVanishListener(VanishTP p) {
         this.plugin = p;
     }
-    // TODO make this work for people joining in vanish after quitting vanished
+    // TODO make this work for people joining in vanish after quitting vanished - playerjoinlistener needs to be delayed a few ticks
     @EventHandler
     public void onVanishStatusChange(VanishStatusChangeEvent event) {
         VanishStatusManager.onVanishStatusChange(event.getAffected().getBase(), event.getValue(), this.plugin);
