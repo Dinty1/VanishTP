@@ -21,7 +21,6 @@ import java.util.Scanner;
 
 public class VanishTP extends JavaPlugin {
     private HashMap<String, Location> vanishedPlayerLocations = new HashMap<String, Location>();
-    private final String dataFolderPath = getDataFolder().getAbsolutePath();
     private boolean updateAvailable = false;
     private String hookedVanishPlugin = "none";
 
@@ -61,7 +60,7 @@ public class VanishTP extends JavaPlugin {
         if (getConfig().getBoolean("store-vanished-players-in-file")) {
             getLogger().info("Attempting to read data from vanished-player-locations.json");
             try {
-                File file = new File(dataFolderPath, "vanished-player-locations.json");
+                File file = new File(getDataFolder(), "vanished-player-locations.json");
                 String data = "";
                 Scanner reader = new Scanner(file);
                 while (reader.hasNextLine()) {
@@ -80,7 +79,7 @@ public class VanishTP extends JavaPlugin {
             } catch (FileNotFoundException e) {
                 getLogger().info("File not found, creating it...");
                 try {
-                    FileWriter fileWriter = new FileWriter(dataFolderPath + "\\vanished-player-locations.json");
+                    FileWriter fileWriter = new FileWriter(new File(getDataFolder(), "vanished-player-locations.json"));
                     fileWriter.write("{}");
                     fileWriter.close();
                 } catch (Exception f) {
@@ -108,7 +107,7 @@ public class VanishTP extends JavaPlugin {
         if (getConfig().getBoolean("store-vanished-players-in-file")) {
             getLogger().info("Attempting to save data...");
             try {
-                FileWriter fileWriter = new FileWriter(dataFolderPath + "\\vanished-player-locations.json");
+                FileWriter fileWriter = new FileWriter(new File(getDataFolder(), "vanished-player-locations.json"));
                 JSONObject JSONData = new JSONObject();
                 Iterator<String> keys = vanishedPlayerLocations.keySet().iterator();
                 while (keys.hasNext()) {
