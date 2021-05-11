@@ -51,7 +51,7 @@ public class ConfigMigrator {
                 }
             }
             final String newConfig = String.join(System.lineSeparator(), newConfigLines);
-            FileWriter fileWriter = new FileWriter(vanishTP.getDataFolder().getAbsolutePath() + "\\config.yml");
+            FileWriter fileWriter = new FileWriter(new File(vanishTP.getDataFolder(), "config.yml"));
             fileWriter.write(newConfig);
             fileWriter.close();
         }
